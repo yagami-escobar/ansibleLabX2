@@ -416,3 +416,548 @@ core/2.17/reference_appendices/interpreter_discovery.html for more information.
     "changed": false,
     "ping": "pong"
 }
+2025-07-26 17:50:29,788 p=7631 u=root n=ansible | ERROR! conflicting action statements: hosts, gather_facts
+
+The error appears to be in '/root/ansibleLabX2/playbooks/install-nginx.yml': line 4, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: "INSTALACIÓN: Nginx y dependencias del sistema"
+  ^ here
+This one looks easy to fix. It seems that there is a value started
+with a quote, and the YAML parser is expecting to see the line ended
+with the same kind of quote. For instance:
+
+    when: "ok" in result.stdout
+
+Could be written as:
+
+   when: '"ok" in result.stdout'
+
+Or equivalently:
+
+   when: "'ok' in result.stdout"
+
+2025-07-26 17:51:05,265 p=7633 u=root n=ansible | [WARNING]: Platform linux on host web1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 17:51:05,267 p=7633 u=root n=ansible | web1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2025-07-26 17:51:05,271 p=7633 u=root n=ansible | [WARNING]: Platform linux on host web2 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 17:51:05,274 p=7633 u=root n=ansible | web2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2025-07-26 17:51:37,718 p=7650 u=root n=ansible | [WARNING]: Platform linux on host web1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 17:51:37,723 p=7650 u=root n=ansible | web1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2025-07-26 17:51:45,552 p=7657 u=root n=ansible | [WARNING]: Platform linux on host web2 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 17:51:45,554 p=7657 u=root n=ansible | web2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+2025-07-26 17:51:54,145 p=7664 u=root n=ansible | {
+    "_meta": {
+        "hostvars": {
+            "web1": {
+                "admin_email": "admin@empresa.com",
+                "admin_users": [
+                    {
+                        "comment": "Usuario DevOps",
+                        "groups": "sudo",
+                        "name": "devops",
+                        "shell": "/bin/bash"
+                    }
+                ],
+                "ansible_host": "52.188.81.6",
+                "ansible_user": "amalaver",
+                "company_name": "SFI Networks",
+                "deployment_date": "{{ ansible_date_time.date }}",
+                "document_root": "/var/www/html",
+                "environment_name": "laboratorio",
+                "firewall_enabled": true,
+                "http_port": 80,
+                "https_port": 443,
+                "log_retention_days": 30,
+                "nginx_access_log": "/var/log/nginx/access.log",
+                "nginx_client_max_body_size": "10M",
+                "nginx_error_log": "/var/log/nginx/error.log",
+                "nginx_keepalive_timeout": 65,
+                "nginx_log_level": "warn",
+                "nginx_service_enabled": true,
+                "nginx_service_state": "started",
+                "nginx_user": "www-data",
+                "nginx_version": "latest",
+                "nginx_worker_connections": 1024,
+                "nginx_worker_processes": 2,
+                "ntp_enabled": true,
+                "ntp_timezone": "{{ timezone }}",
+                "server_id": 1,
+                "ssh_port": 22,
+                "ssl_certificate_key_path": "/etc/ssl/private/nginx.key",
+                "ssl_certificate_path": "/etc/ssl/certs/nginx.crt",
+                "ssl_enabled": false,
+                "system_packages": [
+                    "curl",
+                    "wget",
+                    "unzip",
+                    "vim",
+                    "htop",
+                    "tree"
+                ],
+                "timezone": "America/Lima",
+                "virtual_hosts": [
+                    {
+                        "document_root": "{{ document_root }}",
+                        "index_files": "index.html index.htm",
+                        "name": "default",
+                        "server_name": "{{ ansible_default_ipv4.address }}"
+                    },
+                    {
+                        "document_root": "/var/www/empresa",
+                        "index_files": "index.html",
+                        "name": "empresa",
+                        "server_name": "empresa.local"
+                    }
+                ],
+                "website_title": "Servidor Nginx - {{ environment_name }}"
+            },
+            "web2": {
+                "admin_email": "admin@empresa.com",
+                "admin_users": [
+                    {
+                        "comment": "Usuario DevOps",
+                        "groups": "sudo",
+                        "name": "devops",
+                        "shell": "/bin/bash"
+                    }
+                ],
+                "ansible_host": "135.237.121.243",
+                "ansible_user": "amalaver",
+                "company_name": "SFI Networks",
+                "deployment_date": "{{ ansible_date_time.date }}",
+                "document_root": "/var/www/html",
+                "environment_name": "laboratorio",
+                "firewall_enabled": true,
+                "http_port": 80,
+                "https_port": 443,
+                "log_retention_days": 30,
+                "nginx_access_log": "/var/log/nginx/access.log",
+                "nginx_client_max_body_size": "10M",
+                "nginx_error_log": "/var/log/nginx/error.log",
+                "nginx_keepalive_timeout": 65,
+                "nginx_log_level": "warn",
+                "nginx_service_enabled": true,
+                "nginx_service_state": "started",
+                "nginx_user": "www-data",
+                "nginx_version": "latest",
+                "nginx_worker_connections": 1024,
+                "nginx_worker_processes": 2,
+                "ntp_enabled": true,
+                "ntp_timezone": "{{ timezone }}",
+                "server_id": 2,
+                "ssh_port": 22,
+                "ssl_certificate_key_path": "/etc/ssl/private/nginx.key",
+                "ssl_certificate_path": "/etc/ssl/certs/nginx.crt",
+                "ssl_enabled": false,
+                "system_packages": [
+                    "curl",
+                    "wget",
+                    "unzip",
+                    "vim",
+                    "htop",
+                    "tree"
+                ],
+                "timezone": "America/Lima",
+                "virtual_hosts": [
+                    {
+                        "document_root": "{{ document_root }}",
+                        "index_files": "index.html index.htm",
+                        "name": "default",
+                        "server_name": "{{ ansible_default_ipv4.address }}"
+                    },
+                    {
+                        "document_root": "/var/www/empresa",
+                        "index_files": "index.html",
+                        "name": "empresa",
+                        "server_name": "empresa.local"
+                    }
+                ],
+                "website_title": "Servidor Nginx - {{ environment_name }}"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "webservers",
+            "testing"
+        ]
+    },
+    "testing": {
+        "hosts": [
+            "web1"
+        ]
+    },
+    "webservers": {
+        "hosts": [
+            "web1",
+            "web2"
+        ]
+    }
+}
+2025-07-26 17:58:25,607 p=7666 u=root n=ansible | ERROR! conflicting action statements: hosts, gather_facts
+
+The error appears to be in '/root/ansibleLabX2/playbooks/install-nginx.yml': line 4, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: "INSTALACIÓN: Nginx y dependencias del sistema"
+  ^ here
+This one looks easy to fix. It seems that there is a value started
+with a quote, and the YAML parser is expecting to see the line ended
+with the same kind of quote. For instance:
+
+    when: "ok" in result.stdout
+
+Could be written as:
+
+   when: '"ok" in result.stdout'
+
+Or equivalently:
+
+   when: "'ok' in result.stdout"
+
+2025-07-26 17:58:55,359 p=7671 u=root n=ansible | ERROR! conflicting action statements: hosts, gather_facts
+
+The error appears to be in '/root/ansibleLabX2/playbooks/install-nginx.yml': line 4, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: "INSTALACIÓN: Nginx y dependencias del sistema"
+  ^ here
+This one looks easy to fix. It seems that there is a value started
+with a quote, and the YAML parser is expecting to see the line ended
+with the same kind of quote. For instance:
+
+    when: "ok" in result.stdout
+
+Could be written as:
+
+   when: '"ok" in result.stdout'
+
+Or equivalently:
+
+   when: "'ok' in result.stdout"
+
+2025-07-26 17:59:41,208 p=7691 u=root n=ansible | PLAY [LABORATORIO: Instalación y configuración completa de Nginx] ************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:41,233 p=7691 u=root n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:45,926 p=7691 u=root n=ansible | [WARNING]: Platform linux on host web1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 17:59:45,927 p=7691 u=root n=ansible | ok: [web1]
+2025-07-26 17:59:46,044 p=7691 u=root n=ansible | [WARNING]: Platform linux on host web2 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 17:59:46,045 p=7691 u=root n=ansible | ok: [web2]
+2025-07-26 17:59:46,061 p=7691 u=root n=ansible | TASK [Preparación: Mostrar información inicial] ******************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:46,128 p=7691 u=root n=ansible | ok: [web1] => {
+    "msg": "=====================================\nINICIO DEL LABORATORIO NGINX\n=====================================\nHost: vamalaver01\nIP: 10.0.0.5\nSistema: Ubuntu 24.04\nEntorno: laboratorio\n=====================================\n"
+}
+2025-07-26 17:59:46,130 p=7691 u=root n=ansible | ok: [web2] => {
+    "msg": "=====================================\nINICIO DEL LABORATORIO NGINX\n=====================================\nHost: vamalaver03\nIP: 10.0.0.7\nSistema: Ubuntu 24.04\nEntorno: laboratorio\n=====================================\n"
+}
+2025-07-26 17:59:46,143 p=7691 u=root n=ansible | TASK [Preparación: Actualizar cache de paquetes] *****************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:47,378 p=7691 u=root n=ansible | changed: [web2]
+2025-07-26 17:59:47,746 p=7691 u=root n=ansible | changed: [web1]
+2025-07-26 17:59:47,762 p=7691 u=root n=ansible | TASK [Debug: Verificar variables cargadas] ***********************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:47,843 p=7691 u=root n=ansible | ok: [web1] => {
+    "msg": "Variables del sistema:\n- system_packages: ['curl', 'wget', 'unzip', 'vim', 'htop', 'tree']\n- environment_name: laboratorio\n- timezone: America/Lima\n"
+}
+2025-07-26 17:59:47,862 p=7691 u=root n=ansible | ok: [web2] => {
+    "msg": "Variables del sistema:\n- system_packages: ['curl', 'wget', 'unzip', 'vim', 'htop', 'tree']\n- environment_name: laboratorio\n- timezone: America/Lima\n"
+}
+2025-07-26 17:59:47,880 p=7691 u=root n=ansible | TASK [Sistema: Configurar timezone] ******************************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:47,937 p=7691 u=root n=ansible | skipping: [web1]
+2025-07-26 17:59:47,964 p=7691 u=root n=ansible | skipping: [web2]
+2025-07-26 17:59:47,981 p=7691 u=root n=ansible | TASK [Sistema: Instalar paquetes del sistema] ********************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:48,836 p=7691 u=root n=ansible | fatal: [web2]: FAILED! => {"changed": false, "msg": "No package matching 'tree' is available"}
+2025-07-26 17:59:49,947 p=7691 u=root n=ansible | Suggested packages:
+  zip
+The following NEW packages will be installed:
+  tree unzip
+0 upgraded, 2 newly installed, 0 to remove and 33 not upgraded.
+2025-07-26 17:59:49,948 p=7691 u=root n=ansible | changed: [web1]
+2025-07-26 17:59:49,961 p=7691 u=root n=ansible | TASK [Sistema: Crear usuario administrativo] *********************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:51,079 p=7691 u=root n=ansible | changed: [web1] => (item={'name': 'devops', 'comment': 'Usuario DevOps', 'groups': 'sudo', 'shell': '/bin/bash'})
+2025-07-26 17:59:51,093 p=7691 u=root n=ansible | TASK [Nginx: Instalar nginx] *************************************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:52,083 p=7691 u=root n=ansible | ok: [web1]
+2025-07-26 17:59:52,098 p=7691 u=root n=ansible | TASK [Nginx: Verificar instalación] ******************************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:53,023 p=7691 u=root n=ansible | skipping: [web1]
+2025-07-26 17:59:53,043 p=7691 u=root n=ansible | TASK [Nginx: Mostrar versión instalada] **************************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:53,089 p=7691 u=root n=ansible | ok: [web1] => {
+    "msg": "Nginx instalado: "
+}
+2025-07-26 17:59:53,108 p=7691 u=root n=ansible | TASK [Sistema: Configurar logrotate básico] **********************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:54,125 p=7691 u=root n=ansible | ok: [web1]
+2025-07-26 17:59:54,138 p=7691 u=root n=ansible | TASK [Red: Configurar UFW si está habilitado] ********************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:55,172 p=7691 u=root n=ansible | ok: [web1]
+2025-07-26 17:59:55,190 p=7691 u=root n=ansible | TASK [Verificación: Estado del servicio nginx] *******************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:56,910 p=7691 u=root n=ansible | ok: [web1]
+2025-07-26 17:59:56,927 p=7691 u=root n=ansible | TASK [Verificación: Comprobar que nginx está escuchando] *********************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:57,903 p=7691 u=root n=ansible | skipping: [web1]
+2025-07-26 17:59:57,919 p=7691 u=root n=ansible | TASK [Info: Mostrar resumen de instalación] **********************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:57,973 p=7691 u=root n=ansible | ok: [web1] => {
+    "msg": "=====================================\nINSTALACIÓN COMPLETADA\n=====================================\nHost: vamalaver01\nNginx Version: \nEstado: Instalado y funcionando\nPuerto: 80 activo\nPróximo paso: Configuración\n=====================================\n"
+}
+2025-07-26 17:59:57,992 p=7691 u=root n=ansible | TASK [Config: Crear directorios para virtual hosts] **************************************************************************************************************************************************************************************************************************
+2025-07-26 17:59:58,975 p=7691 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/etc/nginx/sites-available"
+ }
+
+
+2025-07-26 17:59:58,980 p=7691 u=root n=ansible | changed: [web1] => (item=/etc/nginx/sites-available)
+2025-07-26 17:59:59,603 p=7691 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/etc/nginx/sites-enabled"
+ }
+
+
+2025-07-26 17:59:59,606 p=7691 u=root n=ansible | changed: [web1] => (item=/etc/nginx/sites-enabled)
+2025-07-26 18:00:00,238 p=7691 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/etc/nginx/conf.d"
+ }
+
+
+2025-07-26 18:00:00,241 p=7691 u=root n=ansible | changed: [web1] => (item=/etc/nginx/conf.d)
+2025-07-26 18:00:00,259 p=7691 u=root n=ansible | TASK [Config: Crear directorios de documentos web] ***************************************************************************************************************************************************************************************************************************
+2025-07-26 18:00:00,964 p=7691 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/var/www/html"
+ }
+
+
+2025-07-26 18:00:00,967 p=7691 u=root n=ansible | changed: [web1] => (item={'name': 'default', 'server_name': '10.0.0.5', 'document_root': '/var/www/html', 'index_files': 'index.html index.htm'})
+2025-07-26 18:00:01,590 p=7691 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,4 +1,4 @@[0m
+[0;36m[0m {
+     "path": "/var/www/empresa",
+[0;31m-    "state": "absent"[0m
+[0;31m[0m[0;32m+    "state": "directory"[0m
+[0;32m[0m }
+
+
+2025-07-26 18:00:01,591 p=7691 u=root n=ansible | changed: [web1] => (item={'name': 'empresa', 'server_name': 'empresa.local', 'document_root': '/var/www/empresa', 'index_files': 'index.html'})
+2025-07-26 18:00:01,625 p=7691 u=root n=ansible | TASK [Config: Desplegar configuración principal de nginx] ********************************************************************************************************************************************************************************************************************
+2025-07-26 18:00:02,544 p=7691 u=root n=ansible | An exception occurred during task execution. To see the full traceback, use -vvv. The error was: If you are using a module and expect the file to exist on the remote, see the remote_src option
+2025-07-26 18:00:02,549 p=7691 u=root n=ansible | fatal: [web1]: FAILED! => {"changed": false, "msg": "Could not find or access 'nginx.conf.j2'\nSearched in:\n\t/root/ansibleLabX2/playbooks/templates/nginx.conf.j2\n\t/root/ansibleLabX2/playbooks/nginx.conf.j2\n\t/root/ansibleLabX2/playbooks/templates/nginx.conf.j2\n\t/root/ansibleLabX2/playbooks/nginx.conf.j2 on the Ansible Controller.\nIf you are using a module and expect the file to exist on the remote, see the remote_src option"}
+2025-07-26 18:00:02,554 p=7691 u=root n=ansible | PLAY RECAP *******************************************************************************************************************************************************************************************************************************************************************
+2025-07-26 18:00:02,556 p=7691 u=root n=ansible | web1                       : ok=14   changed=5    unreachable=0    failed=1    skipped=3    rescued=0    ignored=0   
+2025-07-26 18:00:02,556 p=7691 u=root n=ansible | web2                       : ok=4    changed=1    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+2025-07-26 18:03:16,064 p=7778 u=root n=ansible | PLAY [LABORATORIO: Instalación y configuración completa de Nginx] ************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:16,094 p=7778 u=root n=ansible | TASK [Gathering Facts] *******************************************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:20,583 p=7778 u=root n=ansible | [WARNING]: Platform linux on host web2 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 18:03:20,585 p=7778 u=root n=ansible | ok: [web2]
+2025-07-26 18:03:20,654 p=7778 u=root n=ansible | [WARNING]: Platform linux on host web1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+
+2025-07-26 18:03:20,654 p=7778 u=root n=ansible | ok: [web1]
+2025-07-26 18:03:20,669 p=7778 u=root n=ansible | TASK [Preparación: Mostrar información inicial] ******************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:20,719 p=7778 u=root n=ansible | ok: [web1] => {
+    "msg": "=====================================\nINICIO DEL LABORATORIO NGINX\n=====================================\nHost: vamalaver01\nIP: 10.0.0.5\nSistema: Ubuntu 24.04\nEntorno: laboratorio\n=====================================\n"
+}
+2025-07-26 18:03:20,750 p=7778 u=root n=ansible | ok: [web2] => {
+    "msg": "=====================================\nINICIO DEL LABORATORIO NGINX\n=====================================\nHost: vamalaver03\nIP: 10.0.0.7\nSistema: Ubuntu 24.04\nEntorno: laboratorio\n=====================================\n"
+}
+2025-07-26 18:03:20,764 p=7778 u=root n=ansible | TASK [Preparación: Actualizar cache de paquetes] *****************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:22,109 p=7778 u=root n=ansible | ok: [web2]
+2025-07-26 18:03:22,339 p=7778 u=root n=ansible | changed: [web1]
+2025-07-26 18:03:22,354 p=7778 u=root n=ansible | TASK [Debug: Verificar variables cargadas] ***********************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:22,411 p=7778 u=root n=ansible | ok: [web1] => {
+    "msg": "Variables del sistema:\n- system_packages: ['curl', 'wget', 'unzip', 'vim', 'htop', 'tree']\n- environment_name: laboratorio\n- timezone: America/Lima\n"
+}
+2025-07-26 18:03:22,446 p=7778 u=root n=ansible | ok: [web2] => {
+    "msg": "Variables del sistema:\n- system_packages: ['curl', 'wget', 'unzip', 'vim', 'htop', 'tree']\n- environment_name: laboratorio\n- timezone: America/Lima\n"
+}
+2025-07-26 18:03:22,464 p=7778 u=root n=ansible | TASK [Sistema: Configurar timezone] ******************************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:22,539 p=7778 u=root n=ansible | skipping: [web1]
+2025-07-26 18:03:22,542 p=7778 u=root n=ansible | skipping: [web2]
+2025-07-26 18:03:22,562 p=7778 u=root n=ansible | TASK [Sistema: Instalar paquetes del sistema] ********************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:24,442 p=7778 u=root n=ansible | Suggested packages:
+  zip
+The following NEW packages will be installed:
+  unzip
+0 upgraded, 1 newly installed, 0 to remove and 36 not upgraded.
+2025-07-26 18:03:24,445 p=7778 u=root n=ansible | changed: [web2]
+2025-07-26 18:03:24,510 p=7778 u=root n=ansible | Suggested packages:
+  zip
+The following NEW packages will be installed:
+  tree unzip
+0 upgraded, 2 newly installed, 0 to remove and 33 not upgraded.
+2025-07-26 18:03:24,511 p=7778 u=root n=ansible | changed: [web1]
+2025-07-26 18:03:24,528 p=7778 u=root n=ansible | TASK [Sistema: Crear usuario administrativo] *********************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:25,629 p=7778 u=root n=ansible | changed: [web1] => (item={'name': 'devops', 'comment': 'Usuario DevOps', 'groups': 'sudo', 'shell': '/bin/bash'})
+2025-07-26 18:03:25,647 p=7778 u=root n=ansible | changed: [web2] => (item={'name': 'devops', 'comment': 'Usuario DevOps', 'groups': 'sudo', 'shell': '/bin/bash'})
+2025-07-26 18:03:25,669 p=7778 u=root n=ansible | TASK [Nginx: Instalar nginx] *************************************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:26,691 p=7778 u=root n=ansible | ok: [web1]
+2025-07-26 18:03:27,582 p=7778 u=root n=ansible | The following additional packages will be installed:
+  nginx-common
+Suggested packages:
+  fcgiwrap nginx-doc ssl-cert
+The following NEW packages will be installed:
+  nginx nginx-common
+0 upgraded, 2 newly installed, 0 to remove and 36 not upgraded.
+2025-07-26 18:03:27,585 p=7778 u=root n=ansible | changed: [web2]
+2025-07-26 18:03:27,604 p=7778 u=root n=ansible | TASK [Nginx: Verificar instalación] ******************************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:28,492 p=7778 u=root n=ansible | skipping: [web1]
+2025-07-26 18:03:28,514 p=7778 u=root n=ansible | skipping: [web2]
+2025-07-26 18:03:28,534 p=7778 u=root n=ansible | TASK [Nginx: Mostrar versión instalada] **************************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:28,588 p=7778 u=root n=ansible | ok: [web1] => {
+    "msg": "Nginx instalado: "
+}
+2025-07-26 18:03:28,625 p=7778 u=root n=ansible | ok: [web2] => {
+    "msg": "Nginx instalado: "
+}
+2025-07-26 18:03:28,645 p=7778 u=root n=ansible | TASK [Sistema: Configurar logrotate básico] **********************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:29,645 p=7778 u=root n=ansible | ok: [web1]
+2025-07-26 18:03:29,663 p=7778 u=root n=ansible | ok: [web2]
+2025-07-26 18:03:29,680 p=7778 u=root n=ansible | TASK [Red: Configurar UFW si está habilitado] ********************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:30,745 p=7778 u=root n=ansible | ok: [web1]
+2025-07-26 18:03:30,748 p=7778 u=root n=ansible | ok: [web2]
+2025-07-26 18:03:30,767 p=7778 u=root n=ansible | TASK [Verificación: Estado del servicio nginx] *******************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:32,183 p=7778 u=root n=ansible | fatal: [web2]: FAILED! => {"changed": false, "msg": "Could not find the requested service nginx: host"}
+2025-07-26 18:03:32,212 p=7778 u=root n=ansible | ok: [web1]
+2025-07-26 18:03:32,236 p=7778 u=root n=ansible | TASK [Verificación: Comprobar que nginx está escuchando] *********************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:33,137 p=7778 u=root n=ansible | skipping: [web1]
+2025-07-26 18:03:33,207 p=7778 u=root n=ansible | TASK [Info: Mostrar resumen de instalación] **********************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:33,268 p=7778 u=root n=ansible | ok: [web1] => {
+    "msg": "=====================================\nINSTALACIÓN COMPLETADA\n=====================================\nHost: vamalaver01\nNginx Version: \nEstado: Instalado y funcionando\nPuerto: 80 activo\nPróximo paso: Configuración\n=====================================\n"
+}
+2025-07-26 18:03:33,288 p=7778 u=root n=ansible | TASK [Config: Crear directorios para virtual hosts] **************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:34,199 p=7778 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/etc/nginx/sites-available"
+ }
+
+
+2025-07-26 18:03:34,202 p=7778 u=root n=ansible | changed: [web1] => (item=/etc/nginx/sites-available)
+2025-07-26 18:03:34,826 p=7778 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/etc/nginx/sites-enabled"
+ }
+
+
+2025-07-26 18:03:34,828 p=7778 u=root n=ansible | changed: [web1] => (item=/etc/nginx/sites-enabled)
+2025-07-26 18:03:35,446 p=7778 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/etc/nginx/conf.d"
+ }
+
+
+2025-07-26 18:03:35,450 p=7778 u=root n=ansible | changed: [web1] => (item=/etc/nginx/conf.d)
+2025-07-26 18:03:35,482 p=7778 u=root n=ansible | TASK [Config: Crear directorios de documentos web] ***************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:36,187 p=7778 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,5 +1,5 @@[0m
+[0;36m[0m {
+[0;31m-    "group": 0,[0m
+[0;31m[0m[0;31m-    "owner": 0,[0m
+[0;31m[0m[0;32m+    "group": 33,[0m
+[0;32m[0m[0;32m+    "owner": 33,[0m
+[0;32m[0m     "path": "/var/www/html"
+ }
+
+
+2025-07-26 18:03:36,191 p=7778 u=root n=ansible | changed: [web1] => (item={'name': 'default', 'server_name': '10.0.0.5', 'document_root': '/var/www/html', 'index_files': 'index.html index.htm'})
+2025-07-26 18:03:36,819 p=7778 u=root n=ansible | [0;31m--- before[0m
+[0;31m[0m[0;32m+++ after[0m
+[0;32m[0m[0;36m@@ -1,4 +1,4 @@[0m
+[0;36m[0m {
+     "path": "/var/www/empresa",
+[0;31m-    "state": "absent"[0m
+[0;31m[0m[0;32m+    "state": "directory"[0m
+[0;32m[0m }
+
+
+2025-07-26 18:03:36,822 p=7778 u=root n=ansible | changed: [web1] => (item={'name': 'empresa', 'server_name': 'empresa.local', 'document_root': '/var/www/empresa', 'index_files': 'index.html'})
+2025-07-26 18:03:36,843 p=7778 u=root n=ansible | TASK [Config: Desplegar configuración principal de nginx] ********************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:37,771 p=7778 u=root n=ansible | An exception occurred during task execution. To see the full traceback, use -vvv. The error was: If you are using a module and expect the file to exist on the remote, see the remote_src option
+2025-07-26 18:03:37,772 p=7778 u=root n=ansible | fatal: [web1]: FAILED! => {"changed": false, "msg": "Could not find or access 'nginx.conf.j2'\nSearched in:\n\t/root/ansibleLabX2/playbooks/templates/nginx.conf.j2\n\t/root/ansibleLabX2/playbooks/nginx.conf.j2\n\t/root/ansibleLabX2/playbooks/templates/nginx.conf.j2\n\t/root/ansibleLabX2/playbooks/nginx.conf.j2 on the Ansible Controller.\nIf you are using a module and expect the file to exist on the remote, see the remote_src option"}
+2025-07-26 18:03:37,776 p=7778 u=root n=ansible | PLAY RECAP *******************************************************************************************************************************************************************************************************************************************************************
+2025-07-26 18:03:37,776 p=7778 u=root n=ansible | web1                       : ok=14   changed=5    unreachable=0    failed=1    skipped=3    rescued=0    ignored=0   
+2025-07-26 18:03:37,777 p=7778 u=root n=ansible | web2                       : ok=10   changed=3    unreachable=0    failed=1    skipped=2    rescued=0    ignored=0   

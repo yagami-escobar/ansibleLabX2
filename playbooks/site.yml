@@ -1,0 +1,133 @@
+---
+# playbooks/site.yml - Playbook principal del laboratorio
+- name: "LABORATORIO: Instalación y configuración completa de Nginx"
+  hosts: webservers
+  become: yes
+  gather_facts: yes
+  
+  vars:
+    # Variables por defecto si no se cargan desde group_vars
+    system_packages:
+      - curl
+      - wget
+      - unzip
+      - vim
+      - htop
+      - tree
+    
+    admin_users:
+      - name: "devops"
+        comment: "Usuario DevOps"
+        groups: "sudo"
+        shell: "/bin/bash"
+    
+    firewall_enabled: true
+    log_retention_days: 30
+    
+    # Variables de Nginx
+    nginx_version: "latest"
+    nginx_service_enabled: true
+    nginx_service_state: "started"
+    nginx_worker_connections: 1024
+    nginx_keepalive_timeout: 65
+    nginx_client_max_body_size: "10M"
+    nginx_access_log: "/var/log/nginx/access.log"
+    nginx_error_log: "/var/log/nginx/error.log"
+    nginx_log_level: "warn"
+    
+    ssl_enabled: false
+    ssl_certificate_path: "/etc/ssl/certs/nginx.crt"
+    ssl_certificate_key_path: "/etc/ssl/private/nginx.key"
+    
+    virtual_hosts:
+      - name: "default"
+        server_name: "{{ ansible_default_ipv4.address }}"
+        document_root: "{{ document_root | default('/var/www/html') }}"
+        index_files: "index.html index.htm"
+      - name: "empresa"
+        server_name: "empresa.local"
+        document_root: "/var/www/empresa"
+        index_files: "index.html"
+    
+    website_title: "Servidor Nginx - {{ environment_name | default('laboratorio') }}"
+    company_name: "SFI Networks"
+    deployment_date: "{{ ansible_date_time.date }}"
+  
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+      listen: "restart nginx"
+    
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
+      listen: "reload nginx"
+    
+    - name: validate nginx config
+      command: nginx -t
+      register: nginx_syntax
+      changed_when: false
+      failed_when: nginx_syntax.rc != 0
+      listen: "validate nginx"
+      
+    - name: enable nginx
+      service:
+        name: nginx
+        enabled: yes
+      listen: "enable nginx"
+  
+  pre_tasks:
+    - name: "Preparación: Mostrar información inicial"
+      debug:
+        msg: |
+          =====================================
+          INICIO DEL LABORATORIO NGINX
+          =====================================
+          Host: {{ ansible_hostname }}
+          IP: {{ ansible_default_ipv4.address }}
+          Sistema: {{ ansible_distribution }} {{ ansible_distribution_version }}
+          Entorno: {{ environment_name }}
+          =====================================
+      tags: ['info']
+      
+    - name: "Preparación: Actualizar cache de paquetes"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+      tags: ['prep']
+
+  tasks:
+    - name: "Incluir: Playbook de instalación"
+      import_tasks: install-nginx.yml
+      tags: ['install']
+    
+    - name: "Incluir: Playbook de configuración"
+      import_tasks: configure-nginx.yml
+      tags: ['config']
+
+  post_tasks:
+    - name: "Reporte: Mostrar resumen final"
+      debug:
+        msg: |
+          =====================================
+          LABORATORIO COMPLETADO
+          =====================================
+          Instalación: EXITOSA
+          Configuración: EXITOSA
+          Verificación: EXITOSA
+          Servidores configurados: {{ groups['webservers'] | length }}
+          URLs disponibles:
+          {% for host in groups['webservers'] %}
+          - http://{{ hostvars[host]['ansible_default_ipv4']['address'] }}:{{ http_port }}
+          {% endfor %}
+          Próximos pasos:
+          1. Acceder a las URLs para verificar
+          2. Revisar logs en /var/log/nginx/
+          3. Experimentar con configuraciones
+          =====================================
+      tags: ['report']
+
